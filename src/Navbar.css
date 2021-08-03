@@ -1,0 +1,31 @@
+.nav {
+  width: 100vw;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: rgb(0, 0, 0);
+  font-family: "Roboto", sans-serif;
+}
+.logo {
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+.list {
+  width: 80%;
+  display: flex;
+  list-style: none;
+  align-items: center;
+  justify-content: space-around;
+}
+.list-item {
+  color: white;
+  text-decoration: none;
+}

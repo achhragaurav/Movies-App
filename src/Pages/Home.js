@@ -1,14 +1,11 @@
-import React from "react";
-import { GlobalContext } from "../components/Context";
+import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import { fetchMovies } from "../utils/fetchMovies";
 import Loading from "../components/Loading";
 import { Link } from "react-router-dom";
-import Search from "../components/Search";
+import { GlobalContext } from "../components/Context";
 const Home = () => {
-  const [loading, setLoading] = useState(true);
-  const [movies, setMovies] = useState({});
-
+  const { loading, setLoading, movies, setMovies } = useContext(GlobalContext);
   const fetchData = async (movies) => {
     setLoading(true);
     try {
@@ -36,21 +33,16 @@ const Home = () => {
   return (
     <div>
       <main>
-        <GlobalContext.Provider
-          value={{ setLoading, movies, setMovies, loading }}
-        >
-          <Search />
-          {movies.titles.map((item) => {
-            return (
+        {movies.titles.map((item) => {
+          return (
+            <Link to={`/singleMovie/${item.id}`} className="link">
               <div className="movie" id={item.id}>
+                <img src={item.image} alt="" />
                 <h1>{item.title}</h1>
-                <Link to={`/singleMovie/${item.id}`}>
-                  <img src={item.image} alt="" />
-                </Link>
               </div>
-            );
-          })}
-        </GlobalContext.Provider>
+            </Link>
+          );
+        })}
       </main>
     </div>
   );

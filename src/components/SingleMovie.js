@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import Loading from "./Loading";
+import MovieContainer from "./MovieContainer";
 const SingleMovieApiLink = `https://imdb-internet-movie-database-unofficial.p.rapidapi.com/film/`;
 
 const SingleMovie = () => {
@@ -19,8 +20,29 @@ const SingleMovie = () => {
         },
       });
       const data = await response.json();
-      const { title, poster, year, cast } = await data;
-      const movieElements = await { title, poster, year, cast };
+      console.log(data);
+      const {
+        title,
+        poster,
+        year,
+        cast,
+        length,
+        plot,
+        rating,
+        rating_votes,
+        trailer,
+      } = await data;
+      const movieElements = await {
+        title,
+        poster,
+        year,
+        cast,
+        length,
+        plot,
+        rating,
+        rating_votes,
+        trailer,
+      };
       return movieElements;
     } catch (error) {
       console.log(error);
@@ -48,12 +70,16 @@ const SingleMovie = () => {
   }
   return (
     <main>
-      <h1>{movieInfo.title}</h1>
-      <img src={movieInfo.poster} alt="" />
-      <h4>{movieInfo.year}</h4>
-      {movieInfo.cast.map((person, index) => {
-        return <h4 key={index}>{person.actor}</h4>;
-      })}
+      <MovieContainer>
+        <div>
+          <h1>{movieInfo.title}</h1>
+          <img src={movieInfo.poster} alt="" />
+          <h4>{movieInfo.year}</h4>
+          {movieInfo.cast.map((person, index) => {
+            return <h4 key={index}>{person.actor}</h4>;
+          })}
+        </div>
+      </MovieContainer>
     </main>
   );
 };
