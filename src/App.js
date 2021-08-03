@@ -1,74 +1,36 @@
-import { GlobalContext } from "./components/Context";
-import { useState, useEffect } from "react";
-import { fetchMovies } from "../src/utils/fetchMovies";
-import Loading from "./components/Loading";
-import Search from "./components/Search";
-
-var dataa = {};
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Navbar from "./Navbar";
+import Home from "./Pages/Home";
+import Contact from "./Pages/Contact";
+import Movies from "./Pages/Movies";
+import Error from "./Pages/Error";
+import SingleMovie from "./components/SingleMovie";
 
 function App() {
-  // Loading and Input
-  const [loading, setLoading] = useState(true);
-  const [movies, setMovies] = useState({});
-
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(
-        `https://imdb-internet-movie-database-unofficial.p.rapidapi.com/search/Inception`,
-        {
-          method: "GET", // or 'PUT'
-          headers: {
-            "x-rapidapi-key":
-              "9bf439e012mshc51568f00f1e937p1c846ejsn2906142dc06f",
-            "x-rapidapi-host":
-              "imdb-internet-movie-database-unofficial.p.rapidapi.com",
-          },
-        }
-      );
-      const mov = await response.json();
-      setLoading(false);
-      setMovies(mov);
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-    fetchMovies("Inception").then((data) => {
-      dataa = { ...data };
-      setLoading(false);
-    });
-  }, []);
-
-  if (loading) {
-    return (
-      <main>
-        <Loading />
-      </main>
-    );
-  }
-
   return (
     <div className="App">
-      <main>
-        <GlobalContext.Provider value={{ setLoading, dataa }}>
-          <Search />
-          {dataa.titles.map((item) => {
-            return (
-              <div className="movie">
-                <h1>{item.title}</h1>
-                <img src={item.image} alt="" />
-              </div>
-            );
-          })}
-        </GlobalContext.Provider>
-      </main>
+      <Router>
+        <Navbar />
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/contact">
+            <Contact />
+          </Route>
+          <Route path="/movies">
+            <Movies />
+          </Route>
+          <Route path="/singleMovie/:id">
+            <SingleMovie />
+          </Route>
+          <Route path="*">
+            <Error />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
 
 export default App;
-// data.titles[0].title

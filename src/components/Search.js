@@ -3,7 +3,7 @@ import { fetchMovies } from "../utils/fetchMovies";
 import { GlobalContext } from "./Context";
 
 const Search = () => {
-  const { setLoading, dataa } = useContext(GlobalContext);
+  const { setLoading, setMovies } = useContext(GlobalContext);
   const input = useRef(null);
 
   return (
@@ -13,7 +13,7 @@ const Search = () => {
         onClick={() => {
           setLoading(true);
           fetchMovies(input.current.value).then((data) => {
-            dataa.titles = data.titles;
+            setMovies(data);
             setLoading(false);
           });
         }}
