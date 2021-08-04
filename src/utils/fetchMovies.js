@@ -1,14 +1,16 @@
-export const fetchMovies = async (movie) => {
+export const fetchMovies = async (movie, page) => {
+  console.log(process.env.REACT_APP_API_KEY);
   return fetch(
-    `https://imdb-internet-movie-database-unofficial.p.rapidapi.com/search/${movie}`,
-    {
-      method: "GET", // or 'PUT'
-      headers: {
-        "x-rapidapi-key": "9bf439e012mshc51568f00f1e937p1c846ejsn2906142dc06f",
-        "x-rapidapi-host":
-          "imdb-internet-movie-database-unofficial.p.rapidapi.com",
-      },
-    }
+    // `https://imdb-internet-movie-database-unofficial.p.rapidapi.com/search/${movie}`,
+    `https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`
+    // {
+    //   method: "GET", // or 'PUT'
+    //   headers: {
+    //     "x-rapidapi-key": "9bf439e012mshc51568f00f1e937p1c846ejsn2906142dc06f",
+    //     "x-rapidapi-host":
+    //       "imdb-internet-movie-database-unofficial.p.rapidapi.com",
+    //   },process.env.REACT_APP_API_KEY
+    // }
   )
     .then((response) => response.json())
     .then((data) => {

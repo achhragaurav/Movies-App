@@ -3,13 +3,15 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import Loading from "./Loading";
 import MovieContainer from "./MovieContainer";
+import { GlobalContext } from "./Context";
 const SingleMovieApiLink = `https://imdb-internet-movie-database-unofficial.p.rapidapi.com/film/`;
 
 const SingleMovie = () => {
+  const { singleMovieDataPass } = useContext(GlobalContext);
   const [loading, setLoading] = useState(true);
   const [movieInfo, setMovieInfo] = useState([]);
   const { id } = useParams();
-
+  console.log(singleMovieDataPass);
   const getSingleMovie = async () => {
     try {
       const response = await fetch(`${SingleMovieApiLink}${id}`, {
@@ -55,7 +57,9 @@ const SingleMovie = () => {
     const data = await getSingleMovie();
     console.log(data);
     await setMovieInfo(data);
-    await setLoading(false);
+    if (singleMovieDataPass) {
+      await setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -74,7 +78,10 @@ const SingleMovie = () => {
       <MovieContainer className="movie-container">
         <div className="movie-container-div">
           <div className="image-container">
-            <img src={movieInfo.poster} alt="" />
+            <img
+              src={`https://image.tmdb.org/t/p/w500${singleMovieDataPass.backdrop_path}`}
+              alt=""
+            />
           </div>
           <div className="details-container">
             <h1 className="movie-name">{movieInfo.title}</h1>

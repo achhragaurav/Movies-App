@@ -11,9 +11,19 @@ import { GlobalContext } from "./components/Context";
 function App() {
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState({});
+  const [singleMovieDataPass, setSingleMovieDataPass] = useState({});
 
   return (
-    <GlobalContext.Provider value={{ setLoading, movies, setMovies, loading }}>
+    <GlobalContext.Provider
+      value={{
+        setLoading,
+        movies,
+        setMovies,
+        loading,
+        singleMovieDataPass,
+        setSingleMovieDataPass,
+      }}
+    >
       <div className="App">
         <Router>
           <Navbar />
