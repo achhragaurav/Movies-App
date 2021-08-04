@@ -1,3 +1,4 @@
+import "./SingleMovie.css";
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import Loading from "./Loading";
@@ -69,15 +70,40 @@ const SingleMovie = () => {
     );
   }
   return (
-    <main>
-      <MovieContainer>
-        <div>
-          <h1>{movieInfo.title}</h1>
-          <img src={movieInfo.poster} alt="" />
-          <h4>{movieInfo.year}</h4>
-          {movieInfo.cast.map((person, index) => {
-            return <h4 key={index}>{person.actor}</h4>;
-          })}
+    <main className="movie-container-main">
+      <MovieContainer className="movie-container">
+        <div className="movie-container-div">
+          <div className="image-container">
+            <img src={movieInfo.poster} alt="" />
+          </div>
+          <div className="details-container">
+            <h1 className="movie-name">{movieInfo.title}</h1>
+            <div className="movie-year">
+              <h4>Year Of Release : {movieInfo.year}</h4>
+              <h4>Length :{movieInfo.length} </h4>
+            </div>
+            <div className="plot">
+              <p>{movieInfo.plot}</p>
+            </div>
+            <div className="rating">
+              <div className="rating-count">
+                <h4>ImDb Rating: {movieInfo.rating}</h4>
+              </div>
+              <div className="rating-votes">
+                <h4>Total Votes: {movieInfo.rating_votes}</h4>
+              </div>
+            </div>
+            <div className="cast">
+              <h1>
+                Cast: <br />
+              </h1>
+              <div className="actor">
+                {movieInfo.cast.map((person, index) => {
+                  return <h4 key={index}>Actor: {person.actor}</h4>;
+                })}
+              </div>
+            </div>
+          </div>
         </div>
       </MovieContainer>
     </main>
