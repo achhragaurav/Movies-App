@@ -15,6 +15,7 @@ function App() {
   const [singleMovieDataPass, setSingleMovieDataPass] = useState({});
   const [pageNumber, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [searchOnOff, setSearchOnOff] = useState(false);
   return (
     <GlobalContext.Provider
       value={{
@@ -28,6 +29,8 @@ function App() {
         setPage,
         totalPages,
         setTotalPages,
+        searchOnOff,
+        setSearchOnOff,
       }}
     >
       <div className="App">

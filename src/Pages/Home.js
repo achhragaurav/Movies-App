@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { fetchMovies } from "../utils/fetchMovies";
 import Loading from "../components/Loading";
 import { Link } from "react-router-dom";
@@ -13,6 +13,7 @@ const Home = () => {
     setSingleMovieDataPass,
     pageNumber,
     setTotalPages,
+    searchOnOff,
   } = useContext(GlobalContext);
   const movieSetter = (item) => {
     setSingleMovieDataPass(item);
@@ -32,7 +33,9 @@ const Home = () => {
   };
 
   useEffect(() => {
-    fetchData(pageNumber);
+    if (!searchOnOff) {
+      fetchData(pageNumber);
+    }
   }, [pageNumber]);
 
   if (loading) {
@@ -47,6 +50,8 @@ const Home = () => {
     <div>
       <main>
         {movies.results.map((item, index) => {
+          console.log(item);
+          console.log(item.poster_path);
           return (
             <Link
               key={index}
@@ -59,8 +64,10 @@ const Home = () => {
             >
               <div className="movie" key={item.id} id={item.id}>
                 <img
-                  src={`https://image.tmdb.org/t/p/w300${item.poster_path}`}
-                  alt=""
+                  src={`https://image.tmdb.org/t/p/w300${
+                    item.poster_path ? item.poster_path : item.profile_path
+                  }`}
+                  alt="No_Image_Available"
                 />
                 <h1>{item.title}</h1>
               </div>
