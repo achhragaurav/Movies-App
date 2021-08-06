@@ -7,12 +7,14 @@ import Movies from "./Pages/Movies";
 import Error from "./Pages/Error";
 import SingleMovie from "./components/SingleMovie";
 import { GlobalContext } from "./components/Context";
+import CustomPagination from "./components/Pagination/CustomPagination";
 
 function App() {
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState({});
   const [singleMovieDataPass, setSingleMovieDataPass] = useState({});
-
+  const [pageNumber, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   return (
     <GlobalContext.Provider
       value={{
@@ -22,6 +24,10 @@ function App() {
         loading,
         singleMovieDataPass,
         setSingleMovieDataPass,
+        pageNumber,
+        setPage,
+        totalPages,
+        setTotalPages,
       }}
     >
       <div className="App">
@@ -44,6 +50,7 @@ function App() {
               <Error />
             </Route>
           </Switch>
+          <CustomPagination />
         </Router>
       </div>
     </GlobalContext.Provider>

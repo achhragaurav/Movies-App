@@ -1,11 +1,9 @@
 import "./SingleMovie.css";
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Loading from "./Loading";
 import MovieContainer from "./MovieContainer";
 import { GlobalContext } from "./Context";
-import { fetchMovies } from "../utils/fetchMovies";
-const SingleMovieApiLink = `https://imdb-internet-movie-database-unofficial.p.rapidapi.com/film/`;
 
 const SingleMovie = () => {
   const { singleMovieDataPass, movies, setMovies, setSingleMovieDataPass } =
