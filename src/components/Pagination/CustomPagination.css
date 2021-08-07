@@ -8,3 +8,10 @@
 .MuiButtonBase-root {
   color: white !important;
 }
+.pagination {
+  width: 100vw !important;
+  height: 20vh !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

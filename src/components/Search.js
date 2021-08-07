@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { GlobalContext } from "./Context";
+import "./Search.css";
 
 const Search = () => {
   const {
@@ -42,6 +43,8 @@ const Search = () => {
   const searchMoviesAPI = async () => {
     if (!input.current.value) {
       setMovies(previousData);
+      const inputBox = document.querySelector(".searchInput");
+      inputBox.style.border = "red";
       return;
     } else {
       setLoading(true);
@@ -58,16 +61,15 @@ const Search = () => {
   }, [pageNumber]);
   return (
     <div className="search">
-      <input type="text" ref={input} onChange={setSearchFunction} />
+      <input
+        type="text"
+        ref={input}
+        onChange={setSearchFunction}
+        className="searchInput"
+      />
       <button
         onClick={() => {
-          setLoading(true);
           searchMoviesAPI();
-          setLoading(false);
-          // fetchMovies(input.current.value).then((data) => {
-          //   setMovies(data);
-          //   setLoading(false);
-          // });
         }}
       >
         Search

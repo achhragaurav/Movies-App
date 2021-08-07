@@ -1,3 +1,4 @@
+import "./Discover.css";
 import React, { useContext } from "react";
 import { useEffect, useRef } from "react";
 import { fetchMovies } from "../utils/fetchMovies";
