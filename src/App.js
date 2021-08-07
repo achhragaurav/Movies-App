@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./Navbar";
-import Home from "./Pages/Home";
-import Contact from "./Pages/Contact";
+import Discover from "./Pages/Discover";
+import Genre from "./Pages/Genre";
 import Movies from "./Pages/Movies";
 import Error from "./Pages/Error";
 import SingleMovie from "./components/SingleMovie";
 import { GlobalContext } from "./components/Context";
 import CustomPagination from "./components/Pagination/CustomPagination";
+import TVShows from "./Pages/TVShows";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -38,13 +39,16 @@ function App() {
           <Navbar />
           <Switch>
             <Route exact path="/">
-              <Home />
+              <Discover />
             </Route>
-            <Route path="/contact">
-              <Contact />
+            <Route path="/genre">
+              <Genre />
             </Route>
             <Route path="/movies">
               <Movies />
+            </Route>
+            <Route path="/tvshows">
+              <TVShows />
             </Route>
             <Route path="/singleMovie/:id">
               <SingleMovie />

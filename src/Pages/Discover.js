@@ -4,7 +4,7 @@ import { fetchMovies } from "../utils/fetchMovies";
 import Loading from "../components/Loading";
 import { Link } from "react-router-dom";
 import { GlobalContext } from "../components/Context";
-const Home = () => {
+const Discover = () => {
   const {
     loading,
     setLoading,
@@ -79,4 +79,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Discover;
