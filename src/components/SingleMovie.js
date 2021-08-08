@@ -19,8 +19,6 @@ const SingleMovie = () => {
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const setId = id;
-  console.log(singleMovieDataPass);
-
   const singleDataFetcher = async (id) => {
     const data = await fetch(
       `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
@@ -31,13 +29,8 @@ const SingleMovie = () => {
 
   const singleMovieDataAssign = async () => {
     setLoading(true);
-    if (singleMovieDataPass === {}) {
-      console.log(singleMovieDataPass);
-      await setLoading(false);
-    } else {
-      await singleDataFetcher(setId);
-      await setLoading(false);
-    }
+    await singleDataFetcher(setId);
+    await setLoading(false);
   };
 
   useEffect(() => {
