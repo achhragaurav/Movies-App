@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import Logo from "./logo.png";
 import Search from "./components/Search";
-
 import "./Navbar.css";
+import { GlobalContext } from "./components/Context";
+
 const Navbar = () => {
+  const { displaySearchBar } = useContext(GlobalContext);
+
   return (
     <nav className="nav">
       <h2 className="logo">
@@ -31,9 +34,7 @@ const Navbar = () => {
             TV Shows
           </Link>
         </li>
-        <li className="list-item">
-          <Search />
-        </li>
+        <li className="list-item">{displaySearchBar && <Search />}</li>
       </ul>
     </nav>
   );

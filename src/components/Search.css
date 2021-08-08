@@ -1,0 +1,23 @@
+.search {
+  width: auto;
+  height: auto;
+}
+.searchInput {
+  outline: none;
+  border: #222 3px solid;
+  background: transparent;
+  padding: 10px 30px;
+  border-radius: 40px;
+  color: white;
+  transition: 0.2s ease-in-out;
+}
+::placeholder {
+  color: white;
+}
+.search-btn {
+  padding: 20px 30px;
+  outline: none;
+  border: none;
+  background: transparent;
+  color: white;
+}

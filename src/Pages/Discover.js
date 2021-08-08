@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { fetchMovies } from "../utils/fetchMovies";
 import Loading from "../components/Loading";
 import { Link } from "react-router-dom";
+import List from "../components/List";
 import { GlobalContext } from "../components/Context";
 const Discover = () => {
   const {
@@ -11,15 +12,13 @@ const Discover = () => {
     setLoading,
     movies,
     setMovies,
-    setSingleMovieDataPass,
     pageNumber,
     setTotalPages,
     searchOnOff,
+    setDisplayPagination,
+    setDisplaySearchBar,
   } = useContext(GlobalContext);
-  const movieSetter = (item) => {
-    setSingleMovieDataPass(item);
-    console.log("hello");
-  };
+
   const fetchData = async (page) => {
     setLoading(true);
     try {
@@ -37,6 +36,8 @@ const Discover = () => {
     if (!searchOnOff) {
       fetchData(pageNumber);
     }
+    setDisplayPagination(true);
+    setDisplaySearchBar(true);
   }, [pageNumber]);
 
   if (loading) {
@@ -49,33 +50,7 @@ const Discover = () => {
 
   return (
     <div>
-      <main>
-        {movies.results.map((item, index) => {
-          console.log(item);
-          console.log(item.poster_path);
-          return (
-            <Link
-              key={index}
-              to={`/singleMovie/${item.id}`}
-              onClick={() => {
-                movieSetter(item);
-              }}
-              className="link"
-              movieinfoset={item}
-            >
-              <div className="movie" key={item.id} id={item.id}>
-                <img
-                  src={`https://image.tmdb.org/t/p/w300${
-                    item.poster_path ? item.poster_path : item.profile_path
-                  }`}
-                  alt="No_Image_Available"
-                />
-                <h1>{item.title}</h1>
-              </div>
-            </Link>
-          );
-        })}
-      </main>
+      <List data={movies.results} />
     </div>
   );
 };

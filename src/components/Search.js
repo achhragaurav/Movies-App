@@ -40,14 +40,15 @@ const Search = () => {
     return response;
   };
 
+  const inputBox = document.querySelector(".searchInput");
   const searchMoviesAPI = async () => {
     if (!input.current.value) {
       setMovies(previousData);
-      const inputBox = document.querySelector(".searchInput");
-      inputBox.style.border = "red";
+      inputBox.style.border = "2px solid red";
       return;
     } else {
       setLoading(true);
+      inputBox.style.border = "2px solid #222";
       const response = await fetchSearchMoviesAPI();
       await setTotalPages(response.total_pages);
       await setMovies(response);
@@ -64,10 +65,14 @@ const Search = () => {
       <input
         type="text"
         ref={input}
-        onChange={setSearchFunction}
+        onChange={async () => {
+          await setSearchFunction();
+          await searchMoviesAPI();
+        }}
         className="searchInput"
       />
       <button
+        className="search-btn"
         onClick={() => {
           searchMoviesAPI();
         }}

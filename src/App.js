@@ -17,6 +17,9 @@ function App() {
   const [pageNumber, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchOnOff, setSearchOnOff] = useState(false);
+  const [displaySearchBar, setDisplaySearchBar] = useState(true);
+  const [displayPagination, setDisplayPagination] = useState(true);
+
   return (
     <GlobalContext.Provider
       value={{
@@ -32,6 +35,10 @@ function App() {
         setTotalPages,
         searchOnOff,
         setSearchOnOff,
+        displaySearchBar,
+        setDisplaySearchBar,
+        displayPagination,
+        setDisplayPagination,
       }}
     >
       <div className="App">
@@ -57,7 +64,7 @@ function App() {
               <Error />
             </Route>
           </Switch>
-          <CustomPagination />
+          {displayPagination && <CustomPagination />}
         </Router>
       </div>
     </GlobalContext.Provider>
