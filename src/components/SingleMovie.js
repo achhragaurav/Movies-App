@@ -6,19 +6,20 @@ import MovieContainer from "./MovieContainer";
 import { GlobalContext } from "./Context";
 import Suggestion from "./Suggestion";
 const SingleMovie = () => {
+  const [loading, setLoading] = useState(true);
+  const { id } = useParams();
+  const setId = id;
   useEffect(() => {
     setDisplayPagination(false);
     setDisplaySearchBar(false);
-  }, []);
+    singleMovieDataAssign();
+  }, [id]);
   const {
     singleMovieDataPass,
     setSingleMovieDataPass,
     setDisplayPagination,
     setDisplaySearchBar,
   } = useContext(GlobalContext);
-  const [loading, setLoading] = useState(true);
-  const { id } = useParams();
-  const setId = id;
   const singleDataFetcher = async (id) => {
     const data = await fetch(
       `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
@@ -32,10 +33,6 @@ const SingleMovie = () => {
     await singleDataFetcher(setId);
     await setLoading(false);
   };
-
-  useEffect(() => {
-    singleMovieDataAssign();
-  }, [id]);
 
   if (loading) {
     return (

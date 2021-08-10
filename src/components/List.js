@@ -4,7 +4,6 @@ import { GlobalContext } from "./Context";
 import "./List.css";
 
 const List = (props) => {
-  console.log(props);
   return (
     <main>
       {props.data.map((item, index) => {
