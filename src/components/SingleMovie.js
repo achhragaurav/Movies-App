@@ -7,8 +7,7 @@ import { GlobalContext } from "./Context";
 import Suggestion from "./Suggestion";
 const SingleMovie = () => {
   const [loading, setLoading] = useState(true);
-  const { id } = useParams();
-  const setId = id;
+  const { id, type } = useParams();
   useEffect(() => {
     setDisplayPagination(false);
     setDisplaySearchBar(false);
@@ -22,15 +21,27 @@ const SingleMovie = () => {
   } = useContext(GlobalContext);
   const singleDataFetcher = async (id) => {
     const data = await fetch(
-      `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
+      `https://api.themoviedb.org/3/${type ? type : "movie"}/${id}?api_key=${
+        process.env.REACT_APP_API_KEY
+      }&language=en-US`
     );
+    console.log(data.status);
+    if (data.status > 250 || data.status < 200 ? true : false) {
+      const data = await fetch(
+        `https://api.themoviedb.org/3/tv/${id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
+      );
+      const response = await data.json();
+      setSingleMovieDataPass(response);
+      return;
+    }
     const response = await data.json();
     setSingleMovieDataPass(response);
+    return;
   };
 
   const singleMovieDataAssign = async () => {
     setLoading(true);
-    await singleDataFetcher(setId);
+    await singleDataFetcher(id);
     await setLoading(false);
   };
 
@@ -81,7 +92,7 @@ const SingleMovie = () => {
           </div>
           <div className="similar-movies">
             <h2>Suggestions</h2>
-            <Suggestion id={setId} />
+            <Suggestion id={id} type={type} />
           </div>
         </div>
       </MovieContainer>

@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { GlobalContext } from "./Context";
 import "./List.css";
 
 const List = (props) => {
+  console.log(props.data);
   return (
     <main>
       {props.data.map((item, index) => {
         return (
           <Link
             key={index}
-            to={`/singleMovie/${item.id}`}
+            to={`/singleMovie/${item.media_type}/${item.id}`}
             onClick={() => {}}
             className="link"
             movieinfoset={item}

@@ -13,7 +13,7 @@ import TVShows from "./Pages/TVShows";
 function App() {
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState({});
-  const [singleMovieDataPass, setSingleMovieDataPass] = useState({});
+  const [singleMovieDataPass, setSingleMovieDataPass] = useState(false);
   const [pageNumber, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchOnOff, setSearchOnOff] = useState(false);
@@ -57,7 +57,7 @@ function App() {
             <Route path="/tvshows">
               <TVShows />
             </Route>
-            <Route path="/singleMovie/:id">
+            <Route path="/singleMovie/:type/:id">
               <SingleMovie />
             </Route>
             <Route path="*">
