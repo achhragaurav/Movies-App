@@ -4,7 +4,7 @@ import { GlobalContext } from "../Context";
 import "./CustomPagination.css";
 
 const CustomPagination = () => {
-  const { setPage, totalPages } = useContext(GlobalContext);
+  const { setPage, totalPages, pageNumber } = useContext(GlobalContext);
 
   const handlePageChange = async (page) => {
     await setPage(page);
@@ -19,6 +19,7 @@ const CustomPagination = () => {
         className=".pagination"
         count={totalPages}
         variant="outlined"
+        page={+pageNumber}
         color="primary"
         onChange={(e) => {
           console.log(e.target);

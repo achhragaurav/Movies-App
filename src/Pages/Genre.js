@@ -11,8 +11,17 @@ const Genre = () => {
   const genreMoviesOrTvInput = useRef(null);
 
   // Context
-  const { setDisplayPagination, setDisplaySearchBar } =
-    useContext(GlobalContext);
+  const {
+    setDisplayPagination,
+    setDisplaySearchBar,
+    loading,
+    setLoading,
+    movies,
+    setMovies,
+    pageNumber,
+    setTotalPages,
+    setPage,
+  } = useContext(GlobalContext);
   // States
   const [genre, setGenre] = useState(false);
   const [listData, setListData] = useState(false);
@@ -24,7 +33,6 @@ const Genre = () => {
       `https://api.themoviedb.org/3/genre/${movieOrTv}/list?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
     );
     const response = await data.json();
-    console.log(response);
     setGenre(response.genres);
     return response;
   };
@@ -34,31 +42,32 @@ const Genre = () => {
       const data = await fetch(
         `https://api.themoviedb.org/3/discover/tv?api_key=${
           process.env.REACT_APP_API_KEY
-        }&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&with_genres=${
+        }&language=en-US&sort_by=popularity.desc&page=${pageNumber}&timezone=America%2FNew_York&with_genres=${
           genree ? genree.id : 10759
         }&include_null_first_air_dates=false&with_watch_monetization_types=flatrate`
       );
 
       const response = await data.json();
-      console.log(response);
       const newResponse = response.results.map((item) => {
         return { media_type: movieOrTv, ...item };
       });
-      setListData(newResponse);
+      await setTotalPages(response.total_pages);
+      await setListData(newResponse);
       return;
     }
     const data = await fetch(
       `https://api.themoviedb.org/3/discover/movie?api_key=${
         process.env.REACT_APP_API_KEY
-      }&with_genres=${genree ? genree.id : 28}&sort_by=revenue.desc`
+      }&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${pageNumber}&with_genres=${
+        genree ? genree.id : 28
+      }&with_watch_monetization_types=flatrate`
     );
 
     const response = await data.json();
-    console.log(response);
     const newResponse = response.results.map((item) => {
       return { media_type: movieOrTv, ...item };
     });
-    console.log(newResponse);
+    await setTotalPages(response.total_pages);
     await setListData(newResponse);
   };
   // Change Data and re render comp
@@ -71,9 +80,13 @@ const Genre = () => {
     genreDataFetcher(genreId, movieOrTv);
   };
   // Init Function
-  const init = async () => {
-    await getGenere("movie");
-    genreDataFetcher();
+  const init = async (genree, movieOrTv = "movie") => {
+    const genres = await getGenere(movieOrTv);
+    const setgenres = await setGenre(genres.genres);
+    const genreId = await genres.genres.find((item) => {
+      return item.name === genree || item.id === +genree;
+    });
+    genreDataFetcher(genreId, movieOrTv);
   };
   // Use effect
   useEffect(() => {
@@ -81,7 +94,14 @@ const Genre = () => {
     setDisplaySearchBar(false);
     init();
   }, []);
-
+  useEffect(() => {
+    init(
+      genreInput.current ? genreInput.current.value : "Action",
+      genreMoviesOrTvInput.current
+        ? genreMoviesOrTvInput.current.value
+        : "movie"
+    );
+  }, [pageNumber]);
   // Component Render
   return (
     <div>
@@ -93,11 +113,11 @@ const Genre = () => {
             id="movies"
             onChange={async (e) => {
               await setSelectedGenreID(e.target.value);
+              setPage(1);
               genreChangeHandler(
                 e.target.value,
                 genreMoviesOrTvInput.current.value
               );
-              console.log(genreInput);
             }}
           >
             {genre.map(({ id, name }) => {
@@ -113,6 +133,7 @@ const Genre = () => {
             id="moviesOrTv"
             ref={genreMoviesOrTvInput}
             onChange={async (e) => {
+              await setPage(1);
               await genreChangeHandler(selectedGenreID, e.target.value);
             }}
           >

@@ -17,6 +17,7 @@ const Discover = () => {
     searchOnOff,
     setDisplayPagination,
     setDisplaySearchBar,
+    setPage,
   } = useContext(GlobalContext);
 
   const fetchData = async (page) => {
@@ -32,6 +33,9 @@ const Discover = () => {
     }
   };
 
+  useEffect(() => {
+    setPage(1);
+  }, []);
   useEffect(() => {
     if (!searchOnOff) {
       fetchData(pageNumber);
