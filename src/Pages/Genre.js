@@ -29,7 +29,7 @@ const Genre = () => {
     return response;
   };
   // Get Data
-  const genreDataFetcher = async (genree, movieOrTv) => {
+  const genreDataFetcher = async (genree, movieOrTv = "movie") => {
     if (movieOrTv === "tv") {
       const data = await fetch(
         `https://api.themoviedb.org/3/discover/tv?api_key=${
@@ -40,6 +40,7 @@ const Genre = () => {
       );
 
       const response = await data.json();
+      console.log(response);
       const newResponse = response.results.map((item) => {
         return { media_type: movieOrTv, ...item };
       });
@@ -61,7 +62,7 @@ const Genre = () => {
     await setListData(newResponse);
   };
   // Change Data and re render comp
-  const genreChangeHandler = async (genree, movieOrTv) => {
+  const genreChangeHandler = async (genree, movieOrTv = "movie") => {
     const genres = await getGenere(movieOrTv);
     const setgenres = await setGenre(genres.genres);
     const genreId = await genre.find((item) => {
