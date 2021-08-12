@@ -19,7 +19,10 @@ const TVShows = () => {
   };
   const TVFilterSetter = async () => {
     const data = await TVFilterFetcher();
-    await setTVShows(data.results);
+    const newResponse = data.results.map((item) => {
+      return { media_type: "tv", ...item };
+    });
+    await setTVShows(newResponse);
     console.log(TVShows);
     await setTVLoading(false);
     console.log(data);

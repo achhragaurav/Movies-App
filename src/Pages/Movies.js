@@ -19,7 +19,10 @@ const Movies = () => {
   };
   const movieFilterSetter = async () => {
     const data = await movieFilterFetcher();
-    await setMovieSection(data.results);
+    const newResponse = data.results.map((item) => {
+      return { media_type: "movie", ...item };
+    });
+    await setMovieSection(newResponse);
     console.log(movieSection);
     await setMovieSecLoading(false);
     console.log(data);
