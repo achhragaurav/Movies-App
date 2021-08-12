@@ -65,7 +65,10 @@ const SingleMovie = () => {
             </div>
             <div className="details-container">
               <h1 className="movie-name">
-                {singleMovieDataPass.original_title}
+                {singleMovieDataPass.original_title ||
+                  singleMovieDataPass.title ||
+                  singleMovieDataPass.name ||
+                  singleMovieDataPass.original_name}
               </h1>
               <div className="movie-year">
                 <h4>Year Of Release : {singleMovieDataPass.release_date}</h4>

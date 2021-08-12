@@ -23,7 +23,7 @@ const TVShows = () => {
       return { media_type: "tv", ...item };
     });
     await setTVShows(newResponse);
-    console.log(TVShows);
+    console.log(newResponse);
     await setTVLoading(false);
     console.log(data);
   };

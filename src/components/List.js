@@ -22,7 +22,7 @@ const List = (props) => {
                 }`}
                 alt="No_Image_Available"
               />
-              <h1>{item.title}</h1>
+              <h1>{item.title || item.name || item.original_name}</h1>
             </div>
           </Link>
         );
