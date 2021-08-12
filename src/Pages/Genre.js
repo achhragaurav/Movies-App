@@ -92,6 +92,7 @@ const Genre = () => {
   useEffect(() => {
     setDisplayPagination(true);
     setDisplaySearchBar(false);
+    setPage(1);
     init();
   }, []);
   useEffect(() => {
